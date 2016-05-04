@@ -1,30 +1,23 @@
-package com.dnd;
+package com.dnd.character;
 
-abstract class Character {
+import com.dnd.Battle;
+import com.dnd.utilities.Utilities;
+
+public abstract class Character implements Battle {
 	private String name;
-	private String alignment;
-	private int armorClass;
-	private int hitPoints;
-	private int strength;
-	private int dexterity;
-	private int constitution;
-	private int wisdom;
-	private int charisma;
-	private int intelligence;
-
-	public Character(String name, String alignment) {
-		this.name = name;
-		this.alignment = alignment;
-		this.armorClass = 10;
-		this.hitPoints = 5;
-		this.strength = 10;
-		this.dexterity = 10;
-		this.constitution = 10;
-		this.wisdom = 10;
-		this.charisma = 10;
-		this.intelligence = 10;
-
-	}
+	private int attackBonus = 0;
+	private byte alignment;
+	private int strength = 10;
+	private int dexterity = 10;
+	private int constitution = 10;
+	private int wisdom = 10;
+	private int charisma = 10;
+	private int intelligence = 10;
+	private int experience = 0;
+	private int level = 1;
+	private int armorClass = 10;
+	private int hitPoints = 5;
+	private String race;
 
 	public String getName() {
 		return name;
@@ -34,16 +27,18 @@ abstract class Character {
 		this.name = name;
 	}
 
-	public String getAlignment() {
+	public byte getAlignment() {
 		return alignment;
 	}
 
-	public void setAlignment(String alignment) {
+	public void setAlignment(byte alignment) {
 		this.alignment = alignment;
 	}
 
 	public int getArmorClass() {
-		return armorClass;
+		int dexterity = this.getDexterity();
+		int dexterityModifier = Utilities.getModifier(dexterity);
+		return (armorClass + dexterityModifier);
 	}
 
 	public void setArmorClass(int armorClass) {
@@ -51,7 +46,9 @@ abstract class Character {
 	}
 
 	public int getHitPoints() {
-		return hitPoints;
+		int constitution = this.getConstitution();
+		int constitutionModifier = Utilities.getModifier(constitution);
+		return (hitPoints + constitutionModifier);
 	}
 
 	public void setHitPoints(int hitPoints) {
@@ -105,4 +102,38 @@ abstract class Character {
 	public void setIntelligence(int intelligence) {
 		this.intelligence = intelligence;
 	}
+
+	public int getExperience() {
+		return experience;
+	}
+
+	public void setExperience(int experience) {
+		this.experience = experience;
+	}
+
+	public int getLevel() {
+		return level;
+	}
+
+	public void setLevel(int level) {
+		this.level = level;
+	}
+
+	public String getRace() {
+		return race;
+	}
+
+	public void setRace(String race) {
+		this.race = race;
+	}
+
+	public int getAttackBonus() {
+		return attackBonus;
+	}
+
+	public void setAttackBonus(int attackBonus) {
+		this.attackBonus = attackBonus;
+	}
+
+	public abstract void levelUp();
 }

@@ -1,13 +1,10 @@
 package com.dnd.utilities;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotEquals;
+import static org.junit.Assert.*;
 
 import org.junit.Test;
 
 import com.dnd.character.*;
-import com.dnd.character.Rogue;
-import com.dnd.character.WarMonk;
 
 public class UtilitiesTest {
 
@@ -54,4 +51,29 @@ public class UtilitiesTest {
 		int newStr = rogue.getStrength();
 		assertNotEquals(currentStr, newStr);
 	}
+
+	@Test
+	public void DwarfChracterShouldChangeWithOrcDefender() {
+		Rogue rogue = new Rogue();
+		rogue.setRace("Dwarf");
+		int currentBonus = rogue.getAttackBonus();
+		Fighter fighter = new Fighter();
+		fighter.setRace("Orc");
+		rogue.attack(fighter);
+		int newBonus = rogue.getAttackBonus();
+		assertEquals(currentBonus, newBonus);
+	}
+
+	@Test
+	public void ElfShouldGainArmorClassWhenFightingOrc() {
+		Rogue rogue = new Rogue();
+		rogue.setRace("Orc");
+		int currentBonus = rogue.getArmorClass();
+		Fighter fighter = new Fighter();
+		fighter.setRace("Elf");
+		rogue.attack(fighter);
+		int newBonus = rogue.getArmorClass();
+		assertEquals(currentBonus, newBonus);
+	}
+
 }

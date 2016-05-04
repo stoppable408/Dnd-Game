@@ -8,7 +8,6 @@ public class Fighter extends Character {
 	final int minimumDamage = 1;
 	final int criticalHit = 20;
 	final int criticalDamageMultiplier = 2;
-	public int attackBonus = 0;
 
 	public Fighter() {
 		this.setConstitution(getConstitution() + classBonus);
@@ -17,7 +16,7 @@ public class Fighter extends Character {
 
 	@Override
 	public void attack(Character enemy) {
-		int currentAttackBonus = attackBonus;
+		int currentAttackBonus = getAttackBonus();
 		Utilities.checkRace(this, enemy);
 		int roll = Utilities.getDieRoll();
 
@@ -28,16 +27,16 @@ public class Fighter extends Character {
 		int enemyDexterityModifier = Utilities.getModifier(enemyDexterity);
 
 		int defense = enemy.getArmorClass() + enemyDexterityModifier;
-		int attack = roll + strengthModifier + attackBonus;
-		int damage = minimumDamage + strengthModifier;
-		if (roll == criticalHit) {
+		int attack = roll + strengthModifier + getAttackBonus();
+		int damage = minimumDamage + strengthModifier + getDamageBonus();
+		if (isCriticalHit(roll)) {
 			damage *= criticalDamageMultiplier;
 		}
 		if (attack > defense) {
 			enemy.setHitPoints(enemy.getHitPoints() - damage);
 			Utilities.updateExperience(this);
 		}
-		attackBonus = currentAttackBonus;
+		this.setAttackBonus(currentAttackBonus);
 	}
 
 	@Override
@@ -48,7 +47,7 @@ public class Fighter extends Character {
 		int currentLevel = this.getLevel();
 		this.setHitPoints(currentHitPoints + (hitPointsPerLevel + constitutionModifier));
 		this.setLevel(++currentLevel);
-		++attackBonus;
+		this.setAttackBonus(this.getAttackBonus() + 1);
 	}
 
 }

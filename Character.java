@@ -5,7 +5,6 @@ import com.dnd.utilities.Utilities;
 
 public abstract class Character implements Battle {
 	private String name;
-	private int attackBonus = 0;
 	private byte alignment;
 	private int strength = 10;
 	private int dexterity = 10;
@@ -18,6 +17,9 @@ public abstract class Character implements Battle {
 	private int armorClass = 10;
 	private int hitPoints = 5;
 	private String race;
+	private int attackBonus = 0;
+	private int damageBonus = 0;
+	private boolean criticalHit = false;
 
 	public String getName() {
 		return name;
@@ -135,5 +137,25 @@ public abstract class Character implements Battle {
 		this.attackBonus = attackBonus;
 	}
 
+	public int getDamageBonus() {
+		return damageBonus;
+	}
+
+	public void setDamageBonus(int damageBonus) {
+		this.damageBonus = damageBonus;
+	}
+
+	public boolean isCriticalHit(int roll) {
+		if ((roll == 20) || ((roll == 19) && (this.getRace() == "Elf")))
+			;
+		this.setCriticalHit(true);
+		return criticalHit;
+	}
+
+	public void setCriticalHit(boolean criticalHit) {
+		this.criticalHit = criticalHit;
+	}
+
 	public abstract void levelUp();
+
 }

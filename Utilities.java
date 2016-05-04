@@ -35,11 +35,43 @@ public class Utilities {
 		String attackerRace = attacker.getRace();
 		String defenderRace = defender.getRace();
 		int currentBonus = attacker.getAttackBonus();
+		int currentDamageBonus = attacker.getDamageBonus();
 
-		if ((attackerRace.equalsIgnoreCase("Dwarf")) && (defenderRace.equalsIgnoreCase("Orc"))) {
+		if (DwarfVsOrc(attackerRace, defenderRace)) {
 			attacker.setAttackBonus(currentBonus + 2);
-
+			attacker.setDamageBonus(currentDamageBonus + 2);
+		}
+		if (OrcvsElf(attackerRace, defenderRace)) {
+			int armorClass = defender.getArmorClass();
+			defender.setArmorClass(armorClass + 2);
+		}
+		if (HalflingvsEverybody(attackerRace, defenderRace)) {
+			int armorClass = defender.getArmorClass();
+			defender.setArmorClass(armorClass + 2);
 		}
 
+	}
+
+	public static boolean DwarfVsOrc(String attackerRace, String defenderRace) {
+		if ((attackerRace.equalsIgnoreCase("Dwarf") && defenderRace.equalsIgnoreCase("Orc")))
+			return true;
+		else {
+			return false;
+		}
+	}
+
+	public static boolean OrcvsElf(String attackerRace, String defenderRace) {
+		if ((attackerRace.equalsIgnoreCase("Orc") && defenderRace.equalsIgnoreCase("Elf")))
+			return true;
+		else {
+			return false;
+		}
+	}
+
+	public static boolean HalflingvsEverybody(String attackerRace, String defenderRace) {
+		if ((!attackerRace.equalsIgnoreCase("Halfling") && defenderRace.equalsIgnoreCase("Halfling")))
+			return true;
+		else
+			return false;
 	}
 }

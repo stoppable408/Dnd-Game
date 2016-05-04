@@ -21,13 +21,6 @@ public class Race {
 		character.setArmorClass(armorClass + 2);
 
 	}
-	/*
-	 * As a player I want to play a Dwarf so that I can drink more than the orc
-	 * 
-	 * +1 to Constitution Modifier, -1 to Charisma Modifier doubles Constitution
-	 * Modifier when adding to hit points per level (if positive) +2 bonus to
-	 * attack/damage when attacking orcs (Dwarves hate Orcs)
-	 */
 
 	public static void makeDwarf(Character character) {
 		character.setRace("Dwarf");
@@ -39,4 +32,22 @@ public class Race {
 
 	}
 
+	public static void makeElf(Character character) {
+		character.setRace("Elf");
+		int dexterity = character.getDexterity();
+		int constitution = character.getConstitution();
+
+		character.setConstitution(constitution - 1);
+		character.setDexterity(dexterity + 1);
+
+	}
+
+	public static void makeHalfling(Character character) {
+		character.setRace("Halfling");
+		int dexterity = character.getDexterity();
+		int strength = character.getStrength();
+
+		character.setStrength(strength - 1);
+		character.setDexterity(dexterity + 1);
+	}
 }

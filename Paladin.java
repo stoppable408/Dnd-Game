@@ -7,12 +7,12 @@ public class Paladin extends Character {
 	final int minimumDamage = 1;
 	final int criticalHit = 20;
 	private int criticalDamageMultiplier = 2;
-	private int attackBonus = 0;
 	private int evilBonus = 0;
 
 	@Override
 	public void attack(Character enemy) {
-		int currentAttackBonus = attackBonus;
+		int currentAttackBonus = getAttackBonus();
+		Utilities.checkRace(this, enemy);
 		if (isEnemyEvil(enemy)) {
 			criticalDamageMultiplier = 3;
 			evilBonus = 2;
@@ -26,9 +26,9 @@ public class Paladin extends Character {
 		int enemyDexterityModifier = Utilities.getModifier(enemyDexterity);
 
 		int defense = enemy.getArmorClass() + enemyDexterityModifier;
-		int attack = roll + strengthModifier + attackBonus + evilBonus;
-		int damage = minimumDamage + strengthModifier;
-		if (roll == criticalHit) {
+		int attack = roll + strengthModifier + getAttackBonus() + evilBonus;
+		int damage = minimumDamage + strengthModifier + getDamageBonus();
+		if (isCriticalHit(roll)) {
 
 			damage *= criticalDamageMultiplier;
 		}
@@ -36,7 +36,7 @@ public class Paladin extends Character {
 			enemy.setHitPoints(enemy.getHitPoints() - damage);
 			Utilities.updateExperience(this);
 		}
-		attackBonus = currentAttackBonus;
+		this.setAttackBonus(currentAttackBonus);
 	}
 
 	public boolean isEnemyEvil(Character enemy) {
@@ -53,7 +53,7 @@ public class Paladin extends Character {
 		int currentLevel = this.getLevel();
 		this.setHitPoints(currentHitPoints + (hitPointsPerLevel + constitutionModifier));
 		this.setLevel(++currentLevel);
-		++attackBonus;
+		this.setAttackBonus(this.getAttackBonus() + 1);
 
 	}
 }
